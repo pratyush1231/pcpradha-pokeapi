@@ -34,11 +34,11 @@ public class PokemonManager {
     } 
 	
 	public int getPokemonByName(String name) {
-		
 		try {
+			name = name.toLowerCase();
 			Pokemon ret = cache.get(name);
 			if (ret != null) {
-				System.out.println(ret);
+				System.out.println("Found " + name.toUpperCase() + " in memory.");
 				return 200;
 			}
 			conn = createConnection("https://pokeapi.co/api/v2/pokemon/" + name);
@@ -55,7 +55,8 @@ public class PokemonManager {
 			}
 			ObjectMapper objMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 			ret = objMapper.readValue(strBuild.toString(), Pokemon.class);
-			System.out.println(ret);
+			if (cache.isFull()) System.out.println("Memory capacity exceeded, replaced oldest pokemon entry.");
+			System.out.println("Inserted " + name.toUpperCase() + " in memory.");
 			cache.set(name, ret);
 			return responseCode;
 		} catch(Exception e) {
@@ -66,6 +67,20 @@ public class PokemonManager {
 		return -1;
 	}
 
+	public void displayMemoryList() {
+		System.out.println(cache.getPokemonNames());
+	}
+	
+	public void displayReport() {
+		if (cache.isEmpty()) {
+			System.out.println("No Pokemon in Memory");
+			return;
+		}
+		for(Pokemon pokemon: cache.getValues()) {
+			System.out.println(pokemon);
+		}
+	}
+	
 	public LRUCache getCache() {
 		return cache;
 	}

@@ -1,15 +1,13 @@
 package com.myapp.PokeApi.model;
 
-import javax.xml.bind.annotation.XmlElement;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class PokemonAbility {
 	
-	@XmlElement(name = "is_hidden")
+	@JsonProperty(value= "is_hidden")
 	protected boolean isHidden;
 	
-	@XmlElement(name = "slot")
+	@JsonProperty(value = "slot")
 	protected int slot;
 	
 	@JsonProperty(value="ability")
@@ -21,4 +19,29 @@ public class PokemonAbility {
 	}
 
 	public PokemonAbility() {}
+
+	public boolean isHidden() {
+		return isHidden;
+	}
+
+	public void setHidden(boolean isHidden) {
+		this.isHidden = isHidden;
+	}
+
+	public int getSlot() {
+		return slot;
+	}
+
+	public void setSlot(int slot) {
+		this.slot = slot;
+	}
+
+	public Ability getAbility() {
+		return ability;
+	}
+
+	public void setAbility(Ability ability) {
+		this.ability = ability;
+	}
+	
 }

@@ -18,11 +18,17 @@ public class Pokemon {
 	@JsonProperty(value = "height")
 	protected int height;
 	
+	@JsonProperty(value = "weight")
+	protected int weight;
+	
 	@JsonProperty(value = "abilities")
 	protected List<PokemonAbility> abilities;
 	
 	@JsonProperty(value = "stats")
 	protected List<PokemonStat> stats;
+	
+	@JsonProperty(value = "sprites")
+	protected PokemonSprite sprites;
 	
 	public Pokemon() {}
 
@@ -74,9 +80,57 @@ public class Pokemon {
 		this.stats = stats;
 	}
 
+	public PokemonSprite getSprites() {
+		return sprites;
+	}
+
+	public void setSprites(PokemonSprite sprites) {
+		this.sprites = sprites;
+	}
+
+	public int getWeight() {
+		return weight;
+	}
+
+	public void setWeight(int weight) {
+		this.weight = weight;
+	}
+
 	@Override
 	public String toString() {
-		return "Pokemon [id=" + id + ", name=" + name + ", baseExperience=" + baseExperience + ", height=" + height
-				+ ", abilities=" + abilities + ", stats=" + stats + "]";
+		StringBuilder strBuild = new StringBuilder();
+		strBuild.append(name.toUpperCase() + "(" + id+ ")" +"\n");
+		strBuild.append("___________________\n");
+		strBuild.append("Base Experience: " + baseExperience + "\n");
+		strBuild.append("Height: " + height + "\n");
+		strBuild.append("Weight: " + weight + "\n");
+		
+		if (abilities != null && !abilities.isEmpty()) {
+			strBuild.append("Abilities: ");
+			String[] abilitiesString = new String[abilities.size()];
+			for (int i = 0; i < abilities.size(); i++) {
+				if (abilities.get(i).isHidden()) {
+					abilitiesString[i] = abilities.get(i).getAbility().getName().toUpperCase() + "(Hidden)";
+				} else {
+					abilitiesString[i] = abilities.get(i).getAbility().getName().toUpperCase();
+				}
+			}
+			strBuild.append(String.join(", ", abilitiesString) + "\n");
+		}
+		
+		if (stats != null && !stats.isEmpty()) {
+			strBuild.append("Stats: ");
+			String[] statsString = new String[stats.size()];
+			for (int i = 0; i < stats.size(); i++) {
+				if (stats.get(i).getStat().isBattleOnly()) {
+					statsString[i] = stats.get(i).getStat().getName().toUpperCase() + "(" + stats.get(i).getBase_stat() + ")" + " (Battle Only)";
+				} else {
+					statsString[i] = stats.get(i).getStat().getName().toUpperCase() + "(" + stats.get(i).getBase_stat() + ")";
+				}
+			}
+			strBuild.append(String.join(", ", statsString) + "\n");
+		}
+		
+		return strBuild.toString();
 	}
 }
