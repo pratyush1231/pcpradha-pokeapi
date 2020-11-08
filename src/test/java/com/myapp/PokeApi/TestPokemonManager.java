@@ -1,7 +1,5 @@
 package com.myapp.PokeApi;
 
-import org.junit.Test;
-
 import com.myapp.PokeApi.logic.PokemonManager;
 
 import junit.framework.TestCase;
@@ -13,13 +11,14 @@ public class TestPokemonManager extends TestCase{
 		pokemonManager = new PokemonManager(3);
 	}
 	
-	@Test
 	public void testGetPokemonByName() {
 		//test a valid response
 		assertEquals(pokemonManager.getPokemonByName("pikachu"), 200);
 		
 		//test an invalid response
 		assertEquals(pokemonManager.getPokemonByName("0"), 404);
+		assertEquals(pokemonManager.getPokemonByName("-1"), 404);
+		assertEquals(pokemonManager.getPokemonByName("1"), 404);
 		
 		//test cache
 		assertNotNull(pokemonManager.getCache().get("pikachu"));

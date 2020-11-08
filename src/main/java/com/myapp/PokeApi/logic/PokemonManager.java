@@ -35,6 +35,10 @@ public class PokemonManager {
 	
 	public int getPokemonByName(String name) {
 		try {
+			if (isNumeric(name)) {
+				System.out.println("Please enter a valid pokemon name.");
+				return 404;
+			}
 			name = name.toLowerCase();
 			Pokemon ret = cache.get(name);
 			if (ret != null) {
@@ -62,7 +66,7 @@ public class PokemonManager {
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
-			conn.disconnect();
+			if (conn != null) conn.disconnect();
 		}
 		return -1;
 	}
@@ -89,4 +93,15 @@ public class PokemonManager {
 		this.cache = cache;
 	}
 	
+	private boolean isNumeric(String name) {
+		if (name == null) {
+	        return false;
+	    }
+	    try {
+	        int num = Integer.parseInt(name);
+	    } catch (NumberFormatException nfe) {
+	        return false;
+	    }
+	    return true;
+	}
 }
