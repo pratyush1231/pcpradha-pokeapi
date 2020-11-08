@@ -25,6 +25,10 @@ public class PokemonManager {
 	public void getPokemonByName(String name) {
 		try {
 			conn = createConnection("https://pokeapi.co/api/v2/pokemon/" + name);
+			if (conn.getResponseCode() == 404) {
+				System.out.println("Pokemon not found");
+				
+			}
 			BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 			StringBuilder strBuild = new StringBuilder();
 			String line;

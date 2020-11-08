@@ -21,6 +21,8 @@ public class Pokemon {
 	@JsonProperty(value = "abilities")
 	protected List<PokemonAbility> abilities;
 	
+	@JsonProperty(value = "stats")
+	protected List<PokemonStat> stats;
 	
 	public Pokemon() {}
 
@@ -74,10 +76,35 @@ public class Pokemon {
 
 
 
+	public List<PokemonAbility> getAbilities() {
+		return abilities;
+	}
+
+
+
+	public void setAbilities(List<PokemonAbility> abilities) {
+		this.abilities = abilities;
+	}
+
+
+
+	public List<PokemonStat> getStats() {
+		return stats;
+	}
+
+
+
+	public void setStats(List<PokemonStat> stats) {
+		this.stats = stats;
+	}
+
+
+
 	@Override
 	public String toString() {
 		return "Pokemon [id=" + id + ", name=" + name + ", baseExperience=" + baseExperience + ", height=" + height
-				+ ", abilities=" + abilities + "]";
+				+ ", abilities=" + abilities + ", stats=" + stats + "]";
 	}
+
 
 }
