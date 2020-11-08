@@ -11,12 +11,14 @@ public class App {
     	boolean check = true;
     	String input;
     	while(check) {
-    		System.out.println("Please enter the pokemon name: ");
-    		input = myScan.next();
-    		System.out.println("Processing request...");
-    		mgr.getPokemonByName(input);
-    		System.out.println("Do you want to continue (y/n) ?");
-    		check = myScan.next().equalsIgnoreCase("y");
+    		System.out.println("Please enter a pokemon name to search or type STOP to end.");
+    		input = myScan.nextLine();
+    		if (input.equalsIgnoreCase("STOP")) {
+    			break;
+    		} else {
+    			System.out.println("Processing request...");
+    			System.out.println(mgr.getPokemonByName(input));
+    		}
     	}
     	System.out.println("PokeApi request complete");
     }
